@@ -1,10 +1,1 @@
-[
-  {
-    "date": "March 6, 2024",
-    "players": ["Robert", "Erna", "Player C", "Player D"]
-  },
-  {
-    "date": "March 13, 2024",
-    "players": ["Player E", "Player F", "Player G", "Schorsch"]
-  }
-]
+[{"date":"1.11.2024","player":["Robert","Erna","Anette","Schorsch"]},{"date":"8.11.2024","player":["Robert","Erna","Lissy","Harald"]}]
