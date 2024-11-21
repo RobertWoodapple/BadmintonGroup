@@ -3,41 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Unsere Badminton Termine</title>
+    <title>Unsere Badminton Termine</title>
     <style>
+        /* Body styling with background color */
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 20px;
+            background-color: #e0f7fa; /* Light blue background */
         }
+        
+        /* Header and logo */
         h1 {
             color: #2c3e50;
             text-align: center;
         }
+        
+        .logo {
+            display: block;
+            max-width: 100%; /* Ensures the logo is responsive */
+            height: auto; /* Maintains aspect ratio */
+            margin: 0 auto; /* Centers the logo horizontally */
+        }
+        
+        /* Table styling with alternating row colors */
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
         }
+        
         th, td {
             padding: 10px;
             text-align: center;
             border: 1px solid #ccc;
         }
+        
         th {
             background-color: #f4f4f4;
         }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9; /* Light gray for alternating rows */
+        }
+        
+        tr:nth-child(odd) {
+            background-color: #ffffff; /* White for alternating rows */
+        }
+        
         caption {
             margin: 10px 0;
             font-size: 1.2em;
             font-weight: bold;
         }
+        
+        /* Static info text inside a rounded rectangle */
+        .info-box {
+            background-color: white;
+            border-radius: 15px; /* Creates rounded corners */
+            padding: 20px;
+            text-align: center;
+            margin: 20px auto;
+            max-width: 600px; /* Centers the text block and sets a max width */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+        }
     </style>
 </head>
 <body>
+    <!-- Logo -->
+    <img src="logo.png" alt="Badminton Group Logo" class="logo">
+    
+    <!-- Title -->
     <h1>Badminton Group Schedule</h1>
+    
+    <!-- Introductory Text -->
     <p>Welcome to our badminton group schedule page. The schedule below is dynamically loaded from a JSON file.</p>
 
+    <!-- Schedule Table -->
     <table id="scheduleTable">
         <caption>Schedule</caption>
         <thead>
@@ -53,6 +95,11 @@
             <!-- Data will be dynamically inserted here -->
         </tbody>
     </table>
+    
+    <!-- Static Info Text -->
+    <div class="info-box">
+        Thank you for visiting! Stay tuned for updated schedules and have fun playing badminton.
+    </div>
 
     <script>
         // URL of the JSON file in your repository
