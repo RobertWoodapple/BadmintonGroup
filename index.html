@@ -83,7 +83,7 @@
     <!-- Future Schedule Table -->
     <div class="table-container">
         <table id="futureScheduleTable">
-            <caption>Future Schedule</caption>
+            <caption>Geplant</caption>
             <thead>
                 <tr>
                     <th>Date</th>
@@ -102,7 +102,7 @@
     <!-- Past Schedule Table -->
     <div class="table-container">
         <table id="pastScheduleTable">
-            <caption>Past Schedule</caption>
+            <caption>Gespielt</caption>
             <thead>
                 <tr>
                     <th>Date</th>
@@ -138,19 +138,12 @@
         .then(data => {
             const futureTableBody = document.getElementById('futureScheduleTable').querySelector('tbody');
             const pastTableBody = document.getElementById('pastScheduleTable').querySelector('tbody');
-            let isFuture = true;
 
             futureTableBody.innerHTML = '';
             pastTableBody.innerHTML = '';
 
             data.forEach(item => {
-            
-                // Skip the "-----" separator
-                if (item.date === '-----') {
-                    isFuture = false;
-                    return;
-                }
-
+                
                 // Create table row for either future or past schedule
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -161,7 +154,7 @@
                     <td>${item.players[3]}</td>
                 `;
 
-                if (isFuture) {
+                if (item.isFuture) {
                     futureTableBody.appendChild(row);
                 } else {
                     pastTableBody.appendChild(row);
