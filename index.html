@@ -25,6 +25,10 @@
             height: auto; /* Maintains aspect ratio */
             margin: 0 auto; /* Centers the logo horizontally */
         }
+
+        .table-container {
+            margin: 20px 0;
+        }
         
         /* Table styling with alternating row colors */
         table {
@@ -76,22 +80,43 @@
     <!-- Title -->
     <h1>Mögen unsere Spiele spannend sein!</h1>
 
-    <!-- Schedule Table -->
-    <table id="scheduleTable">
-        <caption>Schedule</caption>
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Player 1</th>
-                <th>Player 2</th>
-                <th>Player 3</th>
-                <th>Player 4</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data will be dynamically inserted here -->
-        </tbody>
-    </table>
+    <!-- Future Schedule Table -->
+    <div class="table-container">
+        <table id="futureScheduleTable">
+            <caption>Future Schedule</caption>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Player 1</th>
+                    <th>Player 2</th>
+                    <th>Player 3</th>
+                    <th>Player 4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Future schedule data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Past Schedule Table -->
+    <div class="table-container">
+        <table id="pastScheduleTable">
+            <caption>Past Schedule</caption>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Player 1</th>
+                    <th>Player 2</th>
+                    <th>Player 3</th>
+                    <th>Player 4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Past schedule data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
     
     <!-- Static Info Text -->
     <div class="info-box">
@@ -100,40 +125,52 @@
         Wenn sich das 4 Spieler teilen, muss jeder 8,50 € zahlen.
     </div>
 
-    <script>
-        // URL of the JSON file in your repository
-        const dataUrl = 'https://raw.githubusercontent.com/RobertWoodapple/BadmintonGroup/refs/heads/main/data.json';
-        
-        // Fetch the JSON data and render the table
-        fetch(dataUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                const tableBody = document.getElementById('scheduleTable').querySelector('tbody');
-                
-                // Clear any existing rows
-                tableBody.innerHTML = '';
+<script>
+    const dataUrl = 'https://raw.githubusercontent.com/RobertWoodapple/BadmintonGroup/refs/heads/main/data.json';
 
-                // Loop through the data and create table rows
-                data.forEach(item => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${item.date}</td>
-                        <td>${item.players[0]}</td>
-                        <td>${item.players[1]}</td>
-                        <td>${item.players[2]}</td>
-                        <td>${item.players[3]}</td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching the JSON data:', error);
+    fetch(dataUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const futureTableBody = document.getElementById('futureScheduleTable').querySelector('tbody');
+            const pastTableBody = document.getElementById('pastScheduleTable').querySelector('tbody');
+            let isFuture = true;
+
+            futureTableBody.innerHTML = '';
+            pastTableBody.innerHTML = '';
+
+            data.forEach(item => {
+            
+                // Skip the "-----" separator
+                if (item.date === '-----') {
+                    isFuture = false;
+                    return;
+                }
+
+                // Create table row for either future or past schedule
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.date}</td>
+                    <td>${item.players[0]}</td>
+                    <td>${item.players[1]}</td>
+                    <td>${item.players[2]}</td>
+                    <td>${item.players[3]}</td>
+                `;
+
+                if (isFuture) {
+                    futureTableBody.appendChild(row);
+                } else {
+                    pastTableBody.appendChild(row);
+                }
             });
+        })
+        .catch(error => {
+            console.error('Error fetching the JSON data:', error);
+        });
     </script>
 </body>
 </html>
