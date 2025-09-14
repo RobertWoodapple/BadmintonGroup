@@ -142,9 +142,10 @@
             futureTableBody.innerHTML = '';
             pastTableBody.innerHTML = '';
 
+            // Prepare foresight container
+            let foresightItems = [];
+
             data.forEach(item => {
-                
-                // Create table row for either future or past schedule
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${item.date}</td>
@@ -154,16 +155,44 @@
                     <td>${item.players[3]}</td>
                 `;
 
-                if (item.isFuture) {
+                if (item.scheduleType === "planned") {
                     futureTableBody.appendChild(row);
-                } else {
+                } else if (item.scheduleType === "played") {
                     pastTableBody.appendChild(row);
+                } else if (item.scheduleType === "foresight") {
+                    foresightItems.push(row);
                 }
             });
+
+            // Render foresight section if available
+            if (foresightItems.length > 0) {
+                const foresightContainer = document.createElement('div');
+                foresightContainer.className = "table-container";
+                foresightContainer.innerHTML = `
+                    <table id="foresightScheduleTable">
+                        <caption>Nächste Saison</caption>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Player 1</th>
+                                <th>Player 2</th>
+                                <th>Player 3</th>
+                                <th>Player 4</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                `;
+                
+                document.body.appendChild(foresightContainer);
+
+                const foresightBody = foresightContainer.querySelector('tbody');
+                foresightItems.forEach(r => foresightBody.appendChild(r));
+            }
         })
         .catch(error => {
             console.error('Error fetching the JSON data:', error);
         });
-    </script>
+</script>
 </body>
 </html>
